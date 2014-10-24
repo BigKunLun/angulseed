@@ -14,7 +14,6 @@
     "gulp-concat-css": "0.1.4",
     "gulp-rename": "1.2.0",
     "gulp-less": "1.2.3",
-    "gulp-clean": "0.3.0",
     "gulp-html-replace": "1.1.0",
     "gulp-rev": "1.0.0",
     "gulp-livereload": "2.1.0"
