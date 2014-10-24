@@ -2,8 +2,20 @@
   "name": "angulseed",
   "version": "0.1.0",
   "description": "A seed project of angular apps is built with bower and gulp",
-  "repository": "https://github.com/BigKunLun/angulseed",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BigKunLun/angulseed.git"
+  },
+  "author": "BigKunLun",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BigKunLun/angulseed/issues"
+  },
+  "homepage": "https://github.com/BigKunLun/angulseed",
   "devDependencies": {
     "http-server": "^0.6.1",
     "bower": "*",
