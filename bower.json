@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
+  "name": "angulseed",
   "description": "A seed project of angular apps is built with bower and gulp",
   "version": "0.1.0",
-  "homepage": "https://github.com/BigKunLun/angular-seed",
+  "homepage": "https://github.com/BigKunLun/angulseed",
   "license": "MIT",
   "dependencies": {
     "angular": "1.2.18",
