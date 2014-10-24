@@ -8,11 +8,27 @@
 
     <title>angulseed</title>
 
+    <!-- build:libcss -->
+    <link rel="stylesheet" href="/build/css/lib.min.css">
+    <!-- endbuild -->
+
+    <!-- build:css -->
+    <link rel="stylesheet" href="/build/css/app.css">
+    <!-- endbuild -->
+
   </head>
 
   <body>
 
-    <h1>Hello Angular World!</h1>
+    <h1 ng-bind="indexTitle"></h1>
+
+    <!-- build:libjs -->
+    <script src="/build/js/lib.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js -->
+    <script src="/build/js/app.js"></script>
+    <!-- endbuild -->
 
   </body>
 
