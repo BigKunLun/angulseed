@@ -1,0 +1,21 @@
+{
+  "name": "angular-seed",
+  "description": "A seed project of angular apps is built with bower and gulp",
+  "version": "0.1.0",
+  "homepage": "https://github.com/BigKunLun/angular-seed",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.2.18",
+    "angular-route": "1.2.18",
+    "angular-animate": "1.2.18",
+    "angular-resource": "1.2.18",
+    "angular-sanitize": "1.2.18",
+    "angular-bootstrap": "0.11.0",
+    "angular-i18n": "1.2.25",
+    "angular-underscore": "0.4.0",
+    "angular-bindonce": "0.3.1",
+    "angular-loading-bar": "0.4.3",
+    "bootstrap": "3.1.1",
+    "underscore": "1.6.0"
+  }
+}
