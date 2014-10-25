@@ -161,5 +161,18 @@ gulp.task('clean:build', function (cb) {
 
 // gulp run
 gulp.task('default', ['clean:build'],function(){
+  livereload.listen();
+  gulp.run('build-index');
+  gulp.watch('app/**/*.less', ['build-css']).on('change', function(){
+    setTimeout(livereload.changed,1000);
+  });
+  gulp.watch('app/**/*.js', ['build-js']).on('change', function(){
+    console.log('js change');
+    setTimeout(livereload.changed,1000);
+  });
+  gulp.watch('app/modules/index/index.html', ['build-index']).on('change', function(){
+    setTimeout(livereload.changed,1000);
+  });
+  gulp.watch('app/modules/**/*.html').on('change',livereload.changed);
   gulp.run('build-index');
 });
