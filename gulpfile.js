@@ -13,15 +13,12 @@ var less = require('gulp-less'),
     rev = require('gulp-rev'),
     del = require('del');
 
-// deploy flag,default develop
-var deployFlag = false;
+var settings = require('./gulp_settings.json');
 
 // build less
 gulp.task('build-less', function(){
   return es.merge(
-    gulp.src([
-      'app/app.less'
-    ])
+    gulp.src(settings.lessFiles)
       .pipe(less())
       .pipe(gulp.dest('build/css'))
   );
@@ -36,10 +33,7 @@ gulp.task('build-css',['build-less'], function() {
       .pipe(rename({ suffix: '.min' }))
       .pipe(minifycss())
       .pipe(gulp.dest('build/css')),
-    gulp.src([
-      'build/bower_components/bootstrap/dist/css/bootstrap.min.css',
-      'build/bower_components/angular-loading-bar/build/loading-bar.min.css'
-    ]).pipe(concatCss('lib.css'))
+    gulp.src(settings.cssLibFiles).pipe(concatCss('lib.css'))
       .pipe(gulp.dest('build/css'))
       .pipe(rename({ suffix: '.min' }))
       .pipe(minifycss())
@@ -49,9 +43,7 @@ gulp.task('build-css',['build-less'], function() {
 
 // compress,concat,rename js file with your App
 gulp.task('build-js', function() {
-  var concatjs = [
-    'app/**/*.js'
-  ];
+  var concatjs = settings.jsFiles;
 
   var onlyminjs = [];
   for (var i = concatjs.length - 1; i >= 0; i--) {
@@ -92,21 +84,10 @@ gulp.task('uglify-libs',['build-js'],function(){
 
 // concat lib js
 gulp.task('build-libjs', ['uglify-libs'], function() {
-  var angular = deployFlag ? "angular.min.js":"angular.js";
-  var concatjs = [
-    "build/bower_components/jquery/dist/jquery.min.js",
-    "build/bower_components/angular/"+angular,
-    "build/bower_components/angular-i18n/angular-locale_zh-cn.js",
-    "build/bower_components/angular-bootstrap/ui-bootstrap.min.js",
-    "build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
-    "build/bower_components/angular-route/angular-route.min.js",
-    "build/bower_components/angular-sanitize/angular-sanitize.min.js",
-    "build/bower_components/angular-animate/angular-animate.min.js",
-    "build/bower_components/angular-resource/angular-resource.min.js",
-    "build/bower_components/angular-loading-bar/build/loading-bar.min.js",
-    "build/bower_components/angular-bindonce/bindonce.min.js"
-  ];
-  return gulp.src(concatjs)
+
+  var angular = settings.deployFlag ? "angular.min.js":"angular.js";
+  settings.jsLibFiles.unshift("build/bower_components/angular/"+angular);
+  return gulp.src(settings.jsLibFiles)
     .pipe(concat('lib.js'))
     .pipe(gulp.dest('build/js'));
 });
@@ -134,7 +115,7 @@ gulp.task('build-filehash',['build-css','build-libjs'],function(){
 
 // build real index.html by modules/index/index.html
 gulp.task('build-index',['build-filehash'],function(){
-  if(deployFlag){
+  if(settings.deployFlag){
     var css_file_name = require('./build/deploy-css/rev-manifest.json');
     var js_file_name = require('./build/deploy-js/rev-manifest.json');
     gulp.src('app/modules/index/index.html')

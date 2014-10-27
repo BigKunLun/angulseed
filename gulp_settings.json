@@ -20,5 +20,6 @@
   ],
   "jsFiles": [
     "app/**/*.js"
-  ]
+  ],
+  "deployFlag": false
 }
