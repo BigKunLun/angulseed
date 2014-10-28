@@ -1,11 +1,10 @@
 angular.module('myApp.router', ['ngRoute']).config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
   // index
-  $routeProvider.when('/',{
-    templateUrl: '/modules/index/index.html',
-    controller: 'indexCtrl',
+  $routeProvider.when('/app',{
+    templateUrl: '/app/modules/about/about.html'
   })
   .otherwise({
-    redirectTo: ''
+    redirectTo: '/app'
   });
 
   $locationProvider.html5Mode(true);

@@ -6,5 +6,6 @@ angular.module('myApp', [
   'ngSanitize',
   'ui.bootstrap',
   'angular-loading-bar',
-  'pasvaz.bindonce'
+  'pasvaz.bindonce',
+  'myApp.router'
 ]);
