@@ -13,37 +13,40 @@ var less = require('gulp-less'),
     rev = require('gulp-rev'),
     del = require('del');
 
-var settings = require('./gulp_settings.json');
+// var settings = require('./gulp_settings.json');
+var gulpSetting = require('./gulp_settings.json');
+
+var appjs = gulpSetting.js.srcName.replace('.','.min.');
+var appcss = gulpSetting.css.srcName.replace('.','.min.');
+var libcss = gulpSetting.css.libName.replace('.','.min.');
 
 // build less
 gulp.task('build-less', function(){
   return es.merge(
-    gulp.src(settings.lessFiles)
+    gulp.src(gulpSetting.css.src)
       .pipe(less())
-      .pipe(gulp.dest('build/css'))
+      .pipe(gulp.dest(gulpSetting.css.dev))
   );
 });
 
 // compress,concat,rename css file
 gulp.task('build-css',['build-less'], function() {
   return es.merge(
-    gulp.src([
-      'build/css/app.css'
-    ])
+    gulp.src(gulpSetting.css.dev + gulpSetting.css.srcName)
       .pipe(rename({ suffix: '.min' }))
       .pipe(minifycss())
-      .pipe(gulp.dest('build/css')),
-    gulp.src(settings.cssLibFiles).pipe(concatCss('lib.css'))
-      .pipe(gulp.dest('build/css'))
+      .pipe(gulp.dest(gulpSetting.css.dev)),
+    gulp.src(gulpSetting.css.lib).pipe(concatCss(gulpSetting.css.libName))
+      .pipe(gulp.dest(gulpSetting.css.dev))
       .pipe(rename({ suffix: '.min' }))
       .pipe(minifycss())
-      .pipe(gulp.dest('build/css'))
+      .pipe(gulp.dest(gulpSetting.css.dev))
   );
 });
 
 // compress,concat,rename js file with your App
 gulp.task('build-js', function() {
-  var concatjs = settings.jsFiles;
+  var concatjs = gulpSetting.js.src;
 
   var onlyminjs = [];
   for (var i = concatjs.length - 1; i >= 0; i--) {
@@ -54,17 +57,17 @@ gulp.task('build-js', function() {
 
   return es.merge(
     gulp.src(concatjs)
-      .pipe(concat('app.js'))
-      .pipe(gulp.dest('build/js'))
+      .pipe(concat(gulpSetting.js.srcName))
+      .pipe(gulp.dest(gulpSetting.js.dev))
       .pipe(rename({ suffix: '.min' }))
       .pipe(uglify())
-      .pipe(gulp.dest('build/js')),
+      .pipe(gulp.dest(gulpSetting.js.dev)),
 
     gulp.src(onlyminjs)
-      .pipe(gulp.dest('build/js'))
+      .pipe(gulp.dest(gulpSetting.js.dev))
       .pipe(rename({ suffix: '.min' }))
       .pipe(uglify())
-      .pipe(gulp.dest('build/js'))
+      .pipe(gulp.dest(gulpSetting.js.dev))
   );
 });
 
@@ -84,51 +87,52 @@ gulp.task('uglify-libs',['build-js'],function(){
 
 // concat lib js
 gulp.task('build-libjs', ['uglify-libs'], function() {
-
-  var angular = settings.deployFlag ? "angular.min.js":"angular.js";
-  settings.jsLibFiles.unshift("build/bower_components/angular/"+angular);
-  return gulp.src(settings.jsLibFiles)
-    .pipe(concat('lib.js'))
-    .pipe(gulp.dest('build/js'));
+  var angular = gulpSetting.isDeploy ? "angular.min.js":"angular.js";
+  var libjs = gulpSetting.js.lib;
+  libjs.unshift("build/bower_components/angular/"+angular);
+  return gulp.src(libjs)
+    .pipe(concat(gulpSetting.js.libName))
+    .pipe(gulp.dest(gulpSetting.js.dev));
 });
 
+// make file versions
 gulp.task('build-filehash',['build-css','build-libjs'],function(){
   return es.merge(
     gulp.src([
-      'build/js/app.min.js',
-      'build/js/lib.js'
+      gulpSetting.css.dev + appcss,
+      gulpSetting.css.dev + libcss
     ])
       .pipe(rev())
-      .pipe(gulp.dest('build/deploy-js'))
+      .pipe(gulp.dest(gulpSetting.css.deploy))
       .pipe(rev.manifest())
-      .pipe(gulp.dest('build/deploy-js')),
+      .pipe(gulp.dest(gulpSetting.css.deploy)),
     gulp.src([
-      'build/css/app.min.css',
-      'build/css/lib.min.css'
+      gulpSetting.js.dev + appjs,
+      gulpSetting.js.dev + gulpSetting.js.libName
     ])
       .pipe(rev())
-      .pipe(gulp.dest('build/deploy-css'))
+      .pipe(gulp.dest(gulpSetting.js.deploy))
       .pipe(rev.manifest())
-      .pipe(gulp.dest('build/deploy-css'))
+      .pipe(gulp.dest(gulpSetting.js.deploy))
   );
 })
 
 // build real index.html by modules/index/index.html
 gulp.task('build-index',['build-filehash'],function(){
-  if(settings.deployFlag){
-    var css_file_name = require('./build/deploy-css/rev-manifest.json');
-    var js_file_name = require('./build/deploy-js/rev-manifest.json');
-    gulp.src('app/modules/index/index.html')
+  if(gulpSetting.isDeploy){
+    var css_file_name = require('.'+gulpSetting.css.deploy+'rev-manifest.json');
+    var js_file_name = require('.'+gulpSetting.js.deploy+'rev-manifest.json');
+    gulp.src(gulpSetting.realIndex)
       .pipe(htmlreplace({
-        'libcss': '/build/deploy-css/'+css_file_name['lib.min.css'],
-        'css': '/build/deploy-css/'+css_file_name['app.min.css'],
-        'libjs': '/build/deploy-js/'+js_file_name['lib.js'],
-        'js': '/build/deploy-js/'+js_file_name['app.min.js']
+        'libcss': gulpSetting.css.deploy + css_file_name[libcss],
+        'css': gulpSetting.css.deploy + css_file_name[appcss],
+        'libjs': gulpSetting.js.deploy + js_file_name[gulpSetting.js.libName],
+        'js': gulpSetting.js.deploy + js_file_name[appjs]
       }))
       .pipe(gulp.dest('./app'));
   }else{
-    gulp.src('app/modules/index/index.html')
-    .pipe(gulp.dest('app'));
+    gulp.src(gulpSetting.realIndex)
+    .pipe(gulp.dest('./app'));
   }
 });
 
@@ -148,10 +152,9 @@ gulp.task('default', ['clean:build'],function(){
     setTimeout(livereload.changed,1000);
   });
   gulp.watch('app/**/*.js', ['build-js']).on('change', function(){
-    console.log('js change');
     setTimeout(livereload.changed,1000);
   });
-  gulp.watch('app/modules/index/index.html', ['build-index']).on('change', function(){
+  gulp.watch(gulpSetting.realIndex, ['build-index']).on('change', function(){
     setTimeout(livereload.changed,1000);
   });
   gulp.watch('app/modules/**/*.html').on('change',livereload.changed);
