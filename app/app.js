@@ -5,5 +5,8 @@ angular.module('myApp', [
   'ngAnimate',
   'ngSanitize',
 
-  'ui.bootstrap'
+  'ui.bootstrap',
+
+  'myApp.module1',
+  'myApp.module2'
 ]);
