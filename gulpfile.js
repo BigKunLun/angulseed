@@ -13,8 +13,8 @@ var less = require('gulp-less'),
     rev = require('gulp-rev'),
     del = require('del');
 
-// var settings = require('./gulp_settings.json');
 var gulpSetting = require('./gulp_settings.json');
+var bower = require('./bower.json');
 
 var appjs = gulpSetting.js.srcName.replace('.','.min.');
 var appcss = gulpSetting.css.srcName.replace('.','.min.');
@@ -89,7 +89,7 @@ gulp.task('uglify-libs',['build-js'],function(){
 gulp.task('build-libjs', ['uglify-libs'], function() {
   var angular = gulpSetting.isDeploy ? "angular.min.js":"angular.js";
   var libjs = gulpSetting.js.lib;
-  libjs.unshift("build/bower_components/angular/"+angular);
+  libjs.unshift(bower.directory+"/angular/"+angular);
   return gulp.src(libjs)
     .pipe(concat(gulpSetting.js.libName))
     .pipe(gulp.dest(gulpSetting.js.dev));
@@ -140,7 +140,7 @@ gulp.task('build-index',['build-filehash'],function(){
 gulp.task('clean:build', function (cb) {
   del([
     'build/*',
-    '!build/bower_components'
+    '!'+bower.directory
   ], cb);
 });
 
