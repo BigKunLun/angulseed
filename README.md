@@ -56,6 +56,9 @@ this server is:
 
 ```
 npm start
+
+// open other window to run
+gulp
 ```
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
@@ -83,7 +86,51 @@ app/                    --> all of the source files for the application
       module2.html            --> the partial template
       module2.js              --> the controller logic
       module2.less         --> tests of the controller
+  .bowerrc                --> bower directory configuration
+  bower.json              --> manage lib package
+  gulp_setting.json       --> to quickly configure gulp
+  gulpfile.js             --> gulp configuration
+  package.json            --> npm package
 ```
+
+## gulp_setting.json
+```
+{
+  "css": {
+    "lib": [
+      "build/bower_components/bootstrap/dist/css/bootstrap.min.css"
+    ],
+    "libName": "lib.css",
+    "src": [
+      "app/app.less"
+    ],
+    "srcName": "app.css",
+    "dev": "build/css/",
+    "deploy": "build/deploy_css/"
+  },
+  "js": {
+    "lib": [
+      "build/bower_components/jquery/dist/jquery.min.js",
+      "build/bower_components/angular-route/angular-route.min.js",
+      "build/bower_components/angular-sanitize/angular-sanitize.min.js",
+      "build/bower_components/angular-animate/angular-animate.min.js",
+      "build/bower_components/angular-resource/angular-resource.min.js",
+      "build/bower_components/angular-bootstrap/ui-bootstrap.min.js",
+      "build/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
+    ],
+    "libName": "lib.js",
+    "src": [
+      "app/**/*.js"
+    ],
+    "srcName": "app.js",
+    "dev": "build/js/",
+    "deploy": "build/deploy_js/"
+  },
+  "realIndex":"app/modules/index/index.html",
+  "isDeploy": false
+}
+```
+The configuration to quickly build gulp
 
 ## Updating Angular
 
