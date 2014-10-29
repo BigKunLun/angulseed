@@ -83,8 +83,8 @@ app/                    --> all of the source files for the application
       module1.js          --> the controller logic
       module1.less        --> tests of the controller
     module2/                --> the module2 view template
-      module2.html            --> the partial template
-      module2.js              --> the controller logic
+      module2.html          --> the partial template
+      module2.js            --> the controller logic
       module2.less         --> tests of the controller
   .bowerrc                --> bower directory configuration
   bower.json              --> manage lib package
