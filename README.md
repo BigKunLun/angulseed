@@ -43,6 +43,8 @@ us manage and test the application.
 We have preconfigured `npm` to automatically run `bower` so we can simply do:
 
 ```
+npm install -g gulp
+npm install -g bower
 npm install
 ```
 
