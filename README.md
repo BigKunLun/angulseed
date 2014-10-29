@@ -48,8 +48,7 @@ npm install -g bower
 npm install
 ```
 
-Behind the scenes this will also call `bower install`.  You should find that you have two new
-folders in your project.
+Behind the scenes this will also call `bower install`.
 
 ### Run the Application
 
@@ -58,8 +57,7 @@ this server is:
 
 ```
 npm start
-
-// open other window to run
+// open other window to run gul after npm start already complete
 gulp
 ```
 

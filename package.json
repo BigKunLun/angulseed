@@ -33,6 +33,8 @@
     "gulp-livereload": "2.1.0"
   },
   "scripts": {
+    "prestart": "npm install",
+    "postinstall": "bower install",
     "start": "http-server -a localhost -p 8000 -c-1"
   }
 }
