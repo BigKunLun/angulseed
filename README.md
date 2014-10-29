@@ -86,6 +86,7 @@ app/                    --> all of the source files for the application
       module2.html          --> the partial template
       module2.js            --> the controller logic
       module2.less         --> tests of the controller
+  static/               --> static file like css theme or fonts
   .bowerrc                --> bower directory configuration
   bower.json              --> manage lib package
   gulp_setting.json       --> to quickly configure gulp

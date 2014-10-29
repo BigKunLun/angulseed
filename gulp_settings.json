@@ -29,6 +29,14 @@
     "dev": "build/js/",
     "deploy": "build/deploy_js/"
   },
+  "static":[
+    {
+      "src": "app/static/demo_font/*.*","dest": "build/font/"
+    },
+    {
+      "src": "app/static/demo_theme/*.*","dest": "build/theme-css/"
+    }
+  ],
   "realIndex":"app/modules/index/index.html",
   "isDeploy": false
 }

@@ -136,6 +136,13 @@ gulp.task('build-index',['build-filehash'],function(){
   }
 });
 
+gulp.task('build-static',function(){
+  var staticList = gulpSetting.static;
+  for (var i = staticList.length - 1; i >= 0; i--) {
+    gulp.src(staticList[i].src).pipe(gulp.dest(staticList[i].dest));
+  };
+})
+
 // clean build folder
 gulp.task('clean:build', function (cb) {
   del([
@@ -153,6 +160,7 @@ gulp.task('clean:css', function (cb) {
 // gulp run
 gulp.task('default', ['clean:build'],function(){
   livereload.listen();
+  gulp.run('build-static');
   gulp.run('build-index');
   gulp.watch('app/**/*.less', ['build-css']).on('change', function(){
     setTimeout(livereload.changed,1000);
