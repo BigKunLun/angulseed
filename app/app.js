@@ -5,14 +5,5 @@ angular.module('myApp', [
   'ngAnimate',
   'ngSanitize',
 
-  'ui.bootstrap',
-
-  'myApp.router'
+  'ui.bootstrap'
 ]);
-
-angular.module('myApp.router', ['ngRoute']).config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
-  $routeProvider.otherwise({
-    redirectTo: '/app'
-  });
-  $locationProvider.html5Mode(true);
-}]);

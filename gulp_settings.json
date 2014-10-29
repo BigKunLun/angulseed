@@ -9,7 +9,7 @@
     ],
     "srcName": "app.css",
     "dev": "build/css/",
-    "deploy": "build/deploy-css/"
+    "deploy": "build/deploy_css/"
   },
   "js": {
     "lib": [
@@ -27,7 +27,7 @@
     ],
     "srcName": "app.js",
     "dev": "build/js/",
-    "deploy": "build/deploy-js/"
+    "deploy": "build/deploy_js/"
   },
   "realIndex":"app/modules/index/index.html",
   "isDeploy": false
