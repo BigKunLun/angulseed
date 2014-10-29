@@ -57,7 +57,7 @@ this server is:
 
 ```
 npm start
-// open other window to run gul after npm start already complete
+// open other window to run gulp after npm start already complete
 gulp
 ```
 
