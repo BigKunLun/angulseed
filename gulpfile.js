@@ -21,7 +21,7 @@ var appcss = gulpSetting.css.srcName.replace('.','.min.');
 var libcss = gulpSetting.css.libName.replace('.','.min.');
 
 // build less
-gulp.task('build-less', function(){
+gulp.task('build-less',['clean:css'], function(){
   return es.merge(
     gulp.src(gulpSetting.css.src)
       .pipe(less())
@@ -143,6 +143,12 @@ gulp.task('clean:build', function (cb) {
     '!'+bower.directory
   ], cb);
 });
+// clean css
+gulp.task('clean:css', function (cb) {
+  del([
+    gulpSetting.css.dev
+  ], cb);
+})
 
 // gulp run
 gulp.task('default', ['clean:build'],function(){
