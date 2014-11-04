@@ -1,20 +1,13 @@
 {
   "name": "angulseed",
   "description": "A seed project of angular apps is built with bower and gulp",
-  "directory": "build/bower_components",
+  "directory": "bower_components",
   "version": "0.1.0",
   "homepage": "https://github.com/BigKunLun/angulseed",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.2.18",
-    "angular-route": "1.2.18",
-    "angular-animate": "1.2.18",
-    "angular-resource": "1.2.18",
-    "angular-sanitize": "1.2.18",
-    "angular-bootstrap": "0.11.0",
-    "angular-i18n": "1.2.25",
-    "angular-bindonce": "0.3.1",
-    "angular-loading-bar": "0.4.3",
-    "bootstrap": "3.2.0"
+    "angular": "1.2.26",
+    "angular-route": "1.2.26",
+    "bootstrap": "^3.2.0"
   }
 }

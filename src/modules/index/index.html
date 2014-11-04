@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" ng-app="myApp">
+<html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
@@ -8,12 +8,9 @@
 
     <title>angulseed</title>
 
-    <!-- build:libcss -->
-    <link rel="stylesheet" href="/build/css/lib.min.css">
+    <!-- build:load-lib-css -->
     <!-- endbuild -->
-
-    <!-- build:css -->
-    <link rel="stylesheet" href="/build/css/app.css">
+    <!-- build:load-app-css -->
     <!-- endbuild -->
 
   </head>
@@ -29,14 +26,10 @@
 
     <div ng-view></div>
 
-    <!-- build:libjs -->
-    <script src="/build/js/lib.js"></script>
+    <!-- build:load-lib-js -->
     <!-- endbuild -->
-
-    <!-- build:js -->
-    <script src="/build/js/app.js"></script>
+    <!-- build:load-app-js -->
     <!-- endbuild -->
-
   </body>
 
 </html>
