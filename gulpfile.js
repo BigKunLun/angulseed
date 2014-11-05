@@ -7,24 +7,22 @@ var $ = require('gulp-load-plugins')({
 });
 
 // dev static file src that will write into index.html
-var devSrc = {
-  appjs: '',
-  appcss: '',
-  libjs: '',
-  libcss: ''
-}
+var devLoadSrc = {};
 
 // bower lib js src with no mini
 var bowerJsArray = [
-  '/bower_components/jquery/dist/jquery.js',
-  '/bower_components/angular/angular.js',
-  '/bower_components/angular-route/angular-route.js'
-]
+  'bower_components/jquery/dist/jquery.js',
+  'bower_components/angular/angular.js',
+  'bower_components/angular-route/angular-route.js'
+];
 
 // bower lib css src
 var bowerCssArray = [
-  '/bower_components/bootstrap/dist/css/bootstrap.css'
-]
+  'bower_components/bootstrap/dist/css/bootstrap.css'
+];
+
+// js file change flag
+var appJsArrayFlag;
 
 // error handle
 function handleError(err) {
@@ -34,21 +32,19 @@ function handleError(err) {
 
 // build appjs
 gulp.task('getAppFileNames',function(){
-  if($.filenames.get("appjs").length>0){
-    return 'get appjs filenames complete';
-  }
-  return gulp.src(['./src/**/*.js','!./src/async_load.js']).pipe($.filenames("appjs"));
+  appJsArrayFlag = Date.parse(new Date());
+  return gulp.src(['src/**/*.js','!src/async_load.js']).pipe($.filenames(appJsArrayFlag.toString()));
 });
 gulp.task('appjs',['getAppFileNames'],function(){
-  console.log($.filenames.get("appjs"));
+  var arr = $.filenames.get(appJsArrayFlag.toString());
   var loadjs = "<script src='/src/async_load.js'></script>";
-  var scriptStr = '"' + $.filenames.get("appjs").join('","') + '"';
+  var scriptStr = '"' + arr .join('","') + '"';
   var appjs = "<script>"+
                 "$script([" + scriptStr + "],function(){"+
                   "angular.bootstrap(document,['myApp'])"+
                 "});"+
               "</script>";
-  devSrc.appjs = loadjs + "\r\t\t" + appjs;
+  devLoadSrc.appjs = loadjs + "\r\t\t" + appjs;
 });
 
 // build libjs
@@ -61,7 +57,7 @@ gulp.task('libjs',function(){
     }
     bowerjs.push(script);
   };
-  devSrc.libjs = bowerjs.join('\r');
+  devLoadSrc.libjs = bowerjs.join('\r');
 });
 
 // build libcss 
@@ -74,34 +70,41 @@ gulp.task('libcss',function(){
     }
     bowercss.push(link);
   };
-  devSrc.libcss = bowercss.join('\r');
+  devLoadSrc.libcss = bowercss.join('\r');
 })
 
 // build less
 gulp.task('build:less',  function () {
-  return gulp.src('./src/modules/index/index.less')
+  return gulp.src('src/modules/index/index.less')
     .pipe($.less())
     .on('error', handleError)
     .pipe(gulp.dest('./src/'));
 });
 gulp.task('appcss',['build:less'],function(){
   var link = "<link rel='stylesheet' href='/src/index.css'>\r";
-  devSrc.appcss = link;
+  devLoadSrc.appcss = link;
 })
 
-// gulp dev mode
-gulp.task('dev',['appjs','libjs','libcss','appcss'],function(){
-  gulp.src('./src/modules/index/index.html').pipe($.htmlReplace({
-    'load-app-js': devSrc.appjs,
-    'load-lib-js': devSrc.libjs,
-    'load-lib-css': devSrc.libcss,
-    'load-app-css': devSrc.appcss
-  })).pipe(gulp.dest('./src'));
-  gulp.watch('./src/**/*.js',['dev']);
-  gulp.watch('./src/modules/**/*.less',['build:less']);
+// del index.html
+gulp.task('clean:dev-index', function (cb) {
+  $.del([
+    'src/index.html',
+    'src/index.css'
+  ], cb);
 });
 
-// build real index.html by modules/index/index.html
+// gulp dev mode
+gulp.task('dev',['clean:dev-index','appjs','libjs','libcss','appcss'],function(){
+  gulp.src('src/modules/index/index.html').pipe($.htmlReplace({
+    'load-app-js': devLoadSrc.appjs,
+    'load-lib-js': devLoadSrc.libjs,
+    'load-lib-css': devLoadSrc.libcss,
+    'load-app-css': devLoadSrc.appcss
+  })).pipe(gulp.dest('src/'));
+  gulp.watch(['src/**/*.js','src/modules/**/*.less'],['dev']);
+});
+
+// dev mode
 gulp.task('default',function(){
   gulp.start('dev');
 })
