@@ -16,14 +16,13 @@
   </head>
 
   <body ng-controller="indexCtrl">
-
-    <h1 ng-bind="h1"></h1>
-
-    <ul class="menu">
-      <li><a href="/module1">module1</a></li>
-      <li><a href="/module2">module2</a></li>
-    </ul>
-
+    <div class="index-index">
+      <h1 ng-bind="h1"></h1>
+      <ul class="menu">
+        <li><a href="/module1">module1</a></li>
+        <li><a href="/module2">module2</a></li>
+      </ul>
+    </div>
     <div ng-view></div>
 
     <!-- build:load-lib-js -->
