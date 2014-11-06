@@ -1,5 +1,5 @@
-var gulp = require('gulp');
-var del = require('del');
+var gulp = require('gulp'),
+    del = require('del');
 
 gulp.task('clean:devIndex', function (cb) {
   del([
@@ -8,7 +8,7 @@ gulp.task('clean:devIndex', function (cb) {
   ], cb);
 });
 
-gulp.task('clean:dist',function(){
+gulp.task('clean:dist',function(cb){
   del([
     'dist/*'
   ], cb);

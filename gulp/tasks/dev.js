@@ -1,6 +1,6 @@
-var gulp = require('gulp');
-var config = require('../config');
-var filenames = require('gulp-filenames');
+var gulp = require('gulp'),
+    config = require('../config'),
+    filenames = require('gulp-filenames');
 
 // build lib js
 gulp.task('dev:libjs',function(){

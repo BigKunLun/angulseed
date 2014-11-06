@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var config = require('../config');
-var less = require('gulp-less');
-var handleError = require('../handleError');
+var gulp = require('gulp'),
+    config = require('../config'),
+    less = require('gulp-less'),
+    handleError = require('../handleError');
 
 // build less to css
 gulp.task('dev:less',function () {
@@ -10,3 +10,10 @@ gulp.task('dev:less',function () {
     .on('error', handleError)
     .pipe(gulp.dest('src/'));
 });
+
+gulp.task('deploy:less',function(){
+  return gulp.src('src/modules/index/index.less')
+    .pipe(less())
+    .on('error', handleError)
+    .pipe(gulp.dest('dist/css/'));
+})

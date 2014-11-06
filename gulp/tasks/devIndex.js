@@ -1,6 +1,6 @@
-var gulp = require('gulp');
-var htmlReplace = require('gulp-html-replace');
-var config = require('../config');
+var gulp = require('gulp'),
+    htmlReplace = require('gulp-html-replace'),
+    config = require('../config');
 
 gulp.task('dev:index',['clean:devIndex','dev:libjs','dev:appjs','dev:libcss','dev:appcss'],function(){
   gulp.src('src/modules/index/index.html').pipe(htmlReplace({
