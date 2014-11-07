@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 // dev mode
 gulp.task('default',function(){
   gulp.start('dev:index');
-  gulp.watch(['src/**/*.js','src/modules/**/*.less'],['dev:index']);
+  gulp.watch(['./src/**/*.js','./src/modules/**/*.less'],['dev:index']);
 });
 
 // deploy mode

@@ -1,12 +1,13 @@
 var gulp = require('gulp'),
     config = require('../config'),
+    htmlReplace = require('gulp-html-replace'),
     filenames = require('gulp-filenames');
 
 // build lib js
 gulp.task('dev:libjs',function(){
   var bowerjs = [];
   for (var i = 0;i<=config.devLibJs.length - 1; i++) {
-    var script = "<script src='" + config.devLibJs[i] + "'></script>";
+    var script = "<script src='/" + config.devLibJs[i] + "'></script>";
     if(i>0){
       script = '\t\t' + script;
     }
@@ -18,7 +19,7 @@ gulp.task('dev:libjs',function(){
 // build app js
 gulp.task('jsfilenames',function(){
   config.devAppJsFlag = Date.parse(new Date());
-  return gulp.src(['src/**/*.js','!src/async_load.js']).pipe(filenames(config.devAppJsFlag.toString()));
+  return gulp.src(['./src/**/*.js','!./src/async_load.js']).pipe(filenames(config.devAppJsFlag.toString()));
 });
 gulp.task('dev:appjs',['jsfilenames'],function(){
   var arr = filenames.get(config.devAppJsFlag.toString());
@@ -36,7 +37,7 @@ gulp.task('dev:appjs',['jsfilenames'],function(){
 gulp.task('dev:libcss',function(){
   var bowercss = [];
   for (var i = 0;i<=config.devLibCss.length - 1; i++) {
-    var link = "<link rel='stylesheet' href='" + config.devLibCss[i] + "'>";
+    var link = "<link rel='stylesheet' href='/" + config.devLibCss[i] + "'>";
     if(i>0){
       link = '\t\t' + link;
     }
@@ -49,4 +50,13 @@ gulp.task('dev:libcss',function(){
 gulp.task('dev:appcss',['dev:less'],function(){
   var link = "<link rel='stylesheet' href='/src/index.css'>\r";
   config.devLoadSrc.appcss = link;
+});
+
+gulp.task('dev:index',['clean:devIndex','dev:libjs','dev:appjs','dev:libcss','dev:appcss'],function(){
+  gulp.src('./src/modules/index/index.html').pipe(htmlReplace({
+    'load-app-js': config.devLoadSrc.appjs,
+    'load-lib-js': config.devLoadSrc.libjs,
+    'load-lib-css': config.devLoadSrc.libcss,
+    'load-app-css': config.devLoadSrc.appcss
+  })).pipe(gulp.dest('./src/'));
 });
