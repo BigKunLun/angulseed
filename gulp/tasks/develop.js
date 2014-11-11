@@ -19,18 +19,21 @@ gulp.task('dev:libjs',function(){
 // build app js
 gulp.task('jsfilenames',function(){
   config.devAppJsFlag = Date.parse(new Date());
-  return gulp.src(['./src/**/*.js','!./src/async_load.js']).pipe(filenames(config.devAppJsFlag.toString()));
+  return gulp.src(['src/**/*.js','!src/async_load.js']).pipe(filenames(config.devAppJsFlag.toString()));
 });
 gulp.task('dev:appjs',['jsfilenames'],function(){
-  var arr = filenames.get(config.devAppJsFlag.toString());
-  var loadjs = "<script src='/src/async_load.js'></script>";
-  var scriptStr = '"' + arr .join('","') + '"';
-  var appjs = "<script>"+
-                "$script([" + scriptStr + "],function(){"+
-                  "angular.bootstrap(document,['"+config.angularAppName+"'])"+
-                "});"+
-              "</script>";
-  config.devLoadSrc.appjs = loadjs + "\r\t\t" + appjs;
+  var jsArr = filenames.get(config.devAppJsFlag.toString());
+  var jsStr = "<script src='" + jsArr.join("'></script><script src='") + "'></script>";
+  console.log(jsStr);
+  // var loadjs = "<script src='/src/async_load.js'></script>";
+  // var scriptStr = '"' + arr .join('","') + '"';
+  // var appjs = "<script>"+
+  //               "$script([" + scriptStr + "],function(){"+
+  //                 "angular.bootstrap(document,['"+config.angularAppName+"'])"+
+  //               "});"+
+  //             "</script>";
+  // config.devLoadSrc.appjs = loadjs + "\r\t\t" + appjs;
+  config.devLoadSrc.appjs = jsStr;
 });
 
 // build lib css 
@@ -53,10 +56,10 @@ gulp.task('dev:appcss',['dev:less'],function(){
 });
 
 gulp.task('dev:index',['clean:devIndex','dev:libjs','dev:appjs','dev:libcss','dev:appcss'],function(){
-  gulp.src('./src/modules/index/index.html').pipe(htmlReplace({
+  gulp.src('src/modules/index/index.html').pipe(htmlReplace({
     'load-app-js': config.devLoadSrc.appjs,
     'load-lib-js': config.devLoadSrc.libjs,
     'load-lib-css': config.devLoadSrc.libcss,
     'load-app-css': config.devLoadSrc.appcss
-  })).pipe(gulp.dest('./src/'));
+  })).pipe(gulp.dest('src/'));
 });
