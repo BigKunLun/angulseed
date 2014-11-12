@@ -14,7 +14,7 @@ gulp.task('default',['clean:app'],function(){
 });
 
 // deploy mode
-gulp.task('deploy',['deploy:files'],function(){
+gulp.task('deploy',['clean:app'],function(){
   config.isDeploy = true;
   gulp.start('deploy:app');
 });

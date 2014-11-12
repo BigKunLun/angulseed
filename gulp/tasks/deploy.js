@@ -11,7 +11,7 @@ var gulp = require('gulp'),
 
 gulp.task('deploy:css',['build:less'],function(){
   for (var i = config.cssLib.length - 1; i >= 0; i--) {
-    config.cssLib[i] = "app/" + config.cssLib[i];
+    config.cssLib[i] = "src/" + config.cssLib[i];
   };
   return es.merge(
     gulp.src([
@@ -28,7 +28,7 @@ gulp.task('deploy:css',['build:less'],function(){
 
 gulp.task('deploy:js',function(){
   for (var i = config.jsLib.length - 1; i >= 0; i--) {
-    config.jsLib[i] = "app/" + config.jsLib[i];
+    config.jsLib[i] = "src/" + config.jsLib[i];
   };
   return es.merge(
     gulp.src([
@@ -65,11 +65,11 @@ gulp.task('deploy:filehash',['deploy:css','deploy:js'],function(){
   );
 });
 
-gulp.task('deploy:files',['clean:app'],function(){
-  return gulp.src(['src/**/*.*','!src/components/**/*.js','!src/modules/**/*.js','!src/modules/**/*.less','!src/*.js']).pipe(gulp.dest('app/'));
+gulp.task('deploy:files',function(){
+  return gulp.src(['src/modules/**/*.html']).pipe(gulp.dest('app/modules/'));
 });
 
-gulp.task('deploy:app',['deploy:filehash'],function(){
+gulp.task('deploy:app',['deploy:filehash','deploy:files'],function(){
     var cssFileNames = require('../../app/css/rev-manifest.json');
     var jsFileNames = require('../../app/js/rev-manifest.json');
     gulp.src('app/modules/index/index.html').pipe(htmlReplace({
