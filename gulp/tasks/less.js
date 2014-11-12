@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     handleError = require('../handleError');
 
-// build less to css
 gulp.task('dev:less',function () {
   return gulp.src('src/modules/index/index.less')
     .pipe(less())

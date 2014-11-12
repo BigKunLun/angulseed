@@ -27,7 +27,8 @@
     "gulp-concat-css": "0.1.4",
     "gulp-rename": "1.2.0",
     "gulp-html-replace": "1.1.0",
-    "gulp-filenames": "^1.2.0"
+    "gulp-filenames": "^1.2.0",
+    "gulp-watch":"^1.1.0"
   },
   "scripts": {
     "prestart": "npm install",

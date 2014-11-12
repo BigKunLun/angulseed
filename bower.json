@@ -1,7 +1,7 @@
 {
   "name": "angulseed",
   "description": "A seed project of angular apps is built with bower and gulp",
-  "directory": "bower_components",
+  "directory": "app/bower_components",
   "version": "0.1.0",
   "homepage": "https://github.com/BigKunLun/angulseed",
   "license": "MIT",

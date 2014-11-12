@@ -18,21 +18,13 @@ gulp.task('dev:libjs',function(){
 
 // build app js
 gulp.task('jsfilenames',function(){
-  config.devAppJsFlag = Date.parse(new Date());
-  return gulp.src(['src/**/*.js','!src/async_load.js']).pipe(filenames(config.devAppJsFlag.toString()));
+  config.devAppJsFlag = Date.parse(new Date()).toString()+ Math.floor(Math.random()*(100)).toString();
+  console.log(config.devAppJsFlag);
+  return gulp.src(['src/**/*.js','!src/async_load.js']).pipe(filenames(config.devAppJsFlag));
 });
 gulp.task('dev:appjs',['jsfilenames'],function(){
   var jsArr = filenames.get(config.devAppJsFlag.toString());
-  var jsStr = "<script src='" + jsArr.join("'></script><script src='") + "'></script>";
-  console.log(jsStr);
-  // var loadjs = "<script src='/src/async_load.js'></script>";
-  // var scriptStr = '"' + arr .join('","') + '"';
-  // var appjs = "<script>"+
-  //               "$script([" + scriptStr + "],function(){"+
-  //                 "angular.bootstrap(document,['"+config.angularAppName+"'])"+
-  //               "});"+
-  //             "</script>";
-  // config.devLoadSrc.appjs = loadjs + "\r\t\t" + appjs;
+  var jsStr = "<script src='/src/" + jsArr.join("'></script><script src='") + "'></script>";
   config.devLoadSrc.appjs = jsStr;
 });
 
