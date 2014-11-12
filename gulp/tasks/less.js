@@ -3,16 +3,10 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     handleError = require('../handleError');
 
-gulp.task('dev:less',function () {
+gulp.task('build:less',function () {
+  var dest = config.isDeploy?'app/css/':'app/';
   return gulp.src('src/modules/index/index.less')
     .pipe(less())
     .on('error', handleError)
-    .pipe(gulp.dest('src/'));
+    .pipe(gulp.dest(dest));
 });
-
-gulp.task('deploy:less',function(){
-  return gulp.src('src/modules/index/index.less')
-    .pipe(less())
-    .on('error', handleError)
-    .pipe(gulp.dest('dist/css/'));
-})

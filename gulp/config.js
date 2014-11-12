@@ -1,18 +1,13 @@
-var dest = "./build";
-var src = './src';
-
 module.exports = {
-  angularAppName: 'myApp',
-  devLibJs: [
+  jsLib: [
     'bower_components/jquery/dist/jquery.js',
     'bower_components/angular/angular.js',
     'bower_components/angular-route/angular-route.js'
   ],
-  devLibCss: [
+  cssLib: [
     'bower_components/bootstrap/dist/css/bootstrap.css'
   ],
-  devAppJsFlag: null,
-  devLoadSrc:{},
-  deployLoadSrc:{},
+  jsAppFlag: null,
+  loadSrc:{},
   isDeploy: false
 };
